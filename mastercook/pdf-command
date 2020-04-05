@@ -1,3 +1,11 @@
+case $(uname -s) in
+    Darwin) sed=gsed
+            tr=gtr ;;
+    *) sed=sed
+       tr=tr 
+    ;;
+esac
+
 startdate=$(date)
 
 mkdir -p tmp/{recipes,pdf}/{A..Z}
@@ -23,10 +31,10 @@ done
 for rawfile in *.txt
 do
     nospacefile="${rawfile// /}"
-    linkname="$( echo "${rawfile%????}" | gsed -e "s/\b\(.\)/\u\1/g")"
+    linkname="$( echo "${rawfile%????}" | $sed -e "s/\b\(.\)/\u\1/g")"
     pdffile=${nospacefile%????}.pdf
 
-    alphadir="$(echo "${nospacefile:0:1}" | gtr '[a-z]' '[A-Z]')"
+    alphadir="$(echo "${nospacefile:0:1}" | $tr '[a-z]' '[A-Z]')"
     nospacefile="$alphadir/$nospacefile"
     pdffile="$alphadir/$pdffile"
 
@@ -48,13 +56,13 @@ do
         iconv -f utf-8 -t utf-8 -c "${rawfile}" | tr -d '\r' > ../tmp/recipes/${nospacefile}
 
         printf '%s\n' 'g/^\* Exported from MasterCook \*$/+2s/^/# /' w | ed -s ../tmp/recipes/${nospacefile}
-        gsed -e '0,/Exported from MasterCook.*/{/Exported from MasterCook.*/d;}' -i ../tmp/recipes/$nospacefile
-        sed -i '' -e 's/Exported from MasterCook.*/\\newpage'/g ../tmp/recipes/$nospacefile
-        sed -i '' -e '/Recipe By.*\:.*/d' ../tmp/recipes/$nospacefile
-        sed -i '' -e '/Categories.*\:.*/d' ../tmp/recipes/$nospacefile
-        sed -i '' -e 's/Preparation Time.*//' ../tmp/recipes/$nospacefile
-        sed -i '' -e "/Per Serving/,/0 0 0 0 0/d" ../tmp/recipes/$nospacefile
-        sed -i '' -e "/- - - - - - -.*/d" ../tmp/recipes/$nospacefile
+        $sed -i -e '0,/Exported from MasterCook.*/{/Exported from MasterCook.*/d;}' ../tmp/recipes/$nospacefile
+        $sed -i -e 's/Exported from MasterCook.*/\\newpage'/g ../tmp/recipes/$nospacefile
+        $sed -i -e '/Recipe By.*\:.*/d' ../tmp/recipes/$nospacefile
+        $sed -i -e '/Categories.*\:.*/d' ../tmp/recipes/$nospacefile
+        $sed -i -e 's/Preparation Time.*//' ../tmp/recipes/$nospacefile
+        $sed -i -e "/Per Serving/,/0 0 0 0 0/d" ../tmp/recipes/$nospacefile
+        $sed -i -e "/- - - - - - -.*/d" ../tmp/recipes/$nospacefile
     fi 
 
     if [ ! -e ../tmp/pdf/${pdffile} ]; then
