@@ -8,11 +8,17 @@ esac
 
 startdate=$(date)
 
-mkdir -p tmp/{recipes,pdf}/{A..Z}
-mkdir -p tmp/{recipes,pdf}/{0..9}
-
 rm -f index-new.html
 rm -f index.html
+if [ ! -d recipes ]; then
+    echo "Recipe directory does not exist"
+    exit 1
+fi
+
+if [ "$(ls -A recipes)" ]; then
+    echo "No recipes to convert"
+    exit 1
+fi
 
 cd recipes
 
@@ -40,6 +46,7 @@ do
 
     if [ "$skipto" != "$alphadir" ]; then
         skipto=$alphadir
+        mkdir -p ../tmp/{recipes,pdf}/${skipto}
         echo "<a id=\"$skipto\"></a>" >> ../index-$skipto.html
         echo "<h3> == $skipto == </h3>" >> ../index-$skipto.html
         echo -n "$skipto.. "
