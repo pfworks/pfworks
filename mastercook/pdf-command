@@ -73,7 +73,8 @@ do
     fi 
 
     if [ ! -e ../tmp/pdf/${pdffile} ]; then
-        pandoc --pdf-engine=xelatex -V 'mainfont:Rockwell-Regular' -V 'mainfontoptions:BoldFont=Rockwell-Bold' ../tmp/recipes/$nospacefile -V geometry:margin=2cm -o ../tmp/pdf/${pdffile}
+        rm -f pandoc.log
+        pandoc --pdf-engine=xelatex -V 'mainfont:Rockwell-Regular' -V 'mainfontoptions:BoldFont=Rockwell-Bold' ../tmp/recipes/$nospacefile -V geometry:margin=2cm -o ../tmp/pdf/${pdffile} &> pandoc.log
         if [ "$?" != "0" ]; then
             echo "PDF failed for $(basename ${pdffile})"
             exit 1
