@@ -15,7 +15,7 @@ if [ ! -d recipes ]; then
     exit 1
 fi
 
-if [ "$(ls -A recipes)" ]; then
+if [ -z "$(ls -A recipes)" ]; then
     echo "No recipes to convert"
     exit 1
 fi
