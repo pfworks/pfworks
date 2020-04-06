@@ -69,7 +69,12 @@ do
         skipto=$alphadir
         mkdir -p ../tmp/{recipes,pdf}/${skipto}
         echo "<a id=\"$skipto\"></a>" >> ../index-$skipto.html
-        echo "<h3> == $skipto == </h3>" >> ../index-$skipto.html
+        echo "<hr>" >> ../index-$skipto.html
+        echo "<p><svg height=\"20\" width=\"20\">" >> ../index-$skipto.html
+        echo "<circle r=\"8\" cx=\"10\" cy=\"10\" stroke=\"black\" stroke-width=\"2\" fill=\"grey\" />" >> ../index-$skipto.html
+        echo "</svg>" >> ../index-$skipto.html
+        echo "<font size=\"+1\">&nbsp;<b>$skipto</b>&nbsp;&nbsp;&nbsp;</font>" >> ../index-$skipto.html       
+        #echo "<h3>&nbsp;$skipto&nbsp;</h3>" >> ../index-$skipto.html
         echo "<a id=\"back2Top\" title=\"Top\" href=\"#\">&#10148;</a>" >> ../index-$skipto.html
         echo "&nbsp; Top <p>" >> ../index-$skipto.html 
         echo -n "$skipto.. "
@@ -80,7 +85,6 @@ do
     echo -n "\"> " >> ../index-$skipto.html 
     echo -n "${linkname}" >> ../index-$skipto.html
     echo " </a>" >> ../index-$skipto.html
-#    echo "&nbsp;&nbsp;||&nbsp;&nbsp;" >> ../index-$skipto.html
     echo "&nbsp;&nbsp;" >> ../index-$skipto.html
     echo "<svg height=\"10\" width=\"10\">" >> ../index-$skipto.html
     echo "<circle r=\"4\" cx=\"5\" cy=\"5\" stroke=\"black\" stroke-width=\"1\" fill=\"grey\" />" >> ../index-$skipto.html
