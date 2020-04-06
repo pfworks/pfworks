@@ -62,7 +62,7 @@ do
 
         iconv -f utf-8 -t utf-8 -c "${rawfile}" | tr -d '\r' > ../tmp/recipes/${nospacefile}
 
-        printf '%s\n' 'g/^\* Exported from MasterCook \*$/+2s/^/\\begin{center}\\Huge/' w | ed -s ../tmp/recipes/${nospacefile}
+        printf '%s\n' 'g/^\* Exported from MasterCook \*$/+2s/^/\\begin{center}\\Huge /' w | ed -s ../tmp/recipes/${nospacefile}
         $sed -i -e '/\\begin{center}\\Huge/s/$/\\end{center}\\normalsize\\vskip 0.2cm/' ../tmp/recipes/${nospacefile}
         $sed -i -e '0,/Exported from MasterCook.*/{/Exported from MasterCook.*/d;}' ../tmp/recipes/$nospacefile
         $sed -i -e 's/Exported from MasterCook.*/\\newpage'/g ../tmp/recipes/$nospacefile
