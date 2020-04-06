@@ -107,7 +107,7 @@ do
         $sed -i -e "/- - - - - - -.*/d" ../tmp/recipes/$nospacefile
         $sed -i -e 's/\&/\\\&/g' ../tmp/recipes/$nospacefile
         $sed -i -e '/Serving Size  \: 0/d' ../tmp/recipes/$nospacefile
-        $sed -i -e 's/Serving Size\:/Servings \:/g' ../tmp/recipes/$nospacefile
+        $sed -i -e 's/Serving Size  \:/Servings \:/g' ../tmp/recipes/$nospacefile
     fi 
 
     if [ ! -e ../tmp/pdf/${pdffile} ]; then
