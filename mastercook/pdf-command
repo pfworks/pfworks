@@ -70,6 +70,8 @@ do
         mkdir -p ../tmp/{recipes,pdf}/${skipto}
         echo "<a id=\"$skipto\"></a>" >> ../index-$skipto.html
         echo "<h3> == $skipto == </h3>" >> ../index-$skipto.html
+        echo "<a id=\"back2Top\" title=\"Back To Top\" href=\"#\">&#10148;</a>" >> ../index-$skipto.html
+        echo "&nbsp; Back to Top <p>" >> ../index-$skipto.html 
         echo -n "$skipto.. "
     fi
 
