@@ -80,7 +80,12 @@ do
     echo -n "\"> " >> ../index-$skipto.html 
     echo -n "${linkname}" >> ../index-$skipto.html
     echo " </a>" >> ../index-$skipto.html
-    echo "&nbsp;&nbsp;||&nbsp;&nbsp;" >> ../index-$skipto.html
+#    echo "&nbsp;&nbsp;||&nbsp;&nbsp;" >> ../index-$skipto.html
+    echo "&nbsp;&nbsp;" >> ../index-$skipto.html
+    echo "<svg height=\"10\" width=\"10\">" >> ../index-$skipto.html
+    echo "<circle r=\"4\" cx=\"5\" cy=\"5\" stroke=\"black\" stroke-width=\"1\" fill=\"grey\" />" >> ../index-$skipto.html
+    echo "</svg>" >> ../index-$skipto.html
+    echo "&nbsp;&nbsp;" >> ../index-$skipto.html
 
     if [ ! -e ../tmp/recipes/${nospacefile} ]; then
 
