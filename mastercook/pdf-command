@@ -1,3 +1,24 @@
+case "$1" in
+aws) 
+     echo "Pushing index.html to aws"
+     s3cmd -c ~/.aws/.s3cfg -q --progress -P put index.html s3://www.colinburns.com/food/ &> /tmp/awspush
+     if [ "$?" != "0" ]; then 
+        echo "Push problem with index.html"
+        exit 1
+     fi
+     echo "Pushed index.html to aws"
+     echo "Pushing recipes to aws"
+     s3cmd -c ~/.aws/.s3cfg -q --progress -P put --recursive tmp/pdf/* s3://www.colinburns.com/food/pdf-recipes/ &> /tmp/awspush
+     if [ "$?" != "0" ]; then 
+        echo "Push problem with recipes"
+        exit 1
+     fi
+     rm -f /tmp/awspush
+     echo "Pushed file to aws"
+     exit 0
+     ;;
+esac
+
 case $(uname -s) in
     Darwin) sed=gsed
             tr=gtr ;;
@@ -107,9 +128,3 @@ rm index-*.html
 echo
 echo "Start date is $startdate"
 echo "End date is $(date)"
-
-case "$1" in
-aws) s3cmd -c ~/.aws/.s3cfg -P put index.html s3://www.colinburns.com/food/
-     s3cmd -c ~/.aws/.s3cfg -P put --recursive tmp/pdf/* s3://www.colinburns.com/food/pdf-recipes/
-     ;;
-esac
