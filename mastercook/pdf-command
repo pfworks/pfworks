@@ -125,13 +125,15 @@ cd ..
 echo "<head>" > index-top.html
 echo "<title>Recipes</title>" >> index-top.html
 echo "</head>" >> index-top.html
-echo "<h1>Recipes</h1>" >> index-top.html
+echo "<center><h1>Recipes</h1>" >> index-top.html
 
 for letter in $(ls index-?.html | cut -c 7)
 do
-    echo "<a href=\"#$letter\"> $letter</a>" >> index-top.html
+    echo "<a href=\"#$letter\"> <font size=\"+2\">$letter</font></a>" >> index-top.html
+    echo "&nbsp;" >> index-top.html
 done
 echo "<p>" >> index-top.html
+echo "</center>" >> index-top.html
 
 cat index-top.html index-?.html > index.html
 rm index-*.html
