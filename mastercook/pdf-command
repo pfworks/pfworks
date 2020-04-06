@@ -56,7 +56,8 @@ do
     echo -n "${pdffile}" >> ../index-$skipto.html
     echo -n "\"> " >> ../index-$skipto.html 
     echo -n "${linkname}" >> ../index-$skipto.html
-    echo " </a><p>" >> ../index-$skipto.html
+    echo " </a>" >> ../index-$skipto.html
+    echo "&nbsp;&nbsp;||&nbsp;&nbsp;" >> ../index-$skipto.html
 
     if [ ! -e ../tmp/recipes/${nospacefile} ]; then
 
