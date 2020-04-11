@@ -47,7 +47,11 @@ for recipe in *
 do
     recipestart=$(echo "${recipe:0:1}")
     case $recipestart in
-    [a-zA-Z0-9]) : ;;
+    [A-Z0-9]) : ;;
+    [a-z])
+        reciperename=$(echo "$recipe" | $sed 's/\([a-z]\)\([a-zA-Z0-9]*\)/\u\1\2/')
+        mv "$recipe" "$reciperename"
+        ;;
     *) 
         reciperename=$(echo $recipe | cut -c2-)
         mv "$recipe" "$reciperename"
