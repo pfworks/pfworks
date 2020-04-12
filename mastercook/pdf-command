@@ -1,12 +1,5 @@
 case "$1" in
 aws) 
-     echo "Pushing index.html to aws"
-     s3cmd -c ~/.aws/.s3cfg -q --progress -P put index.html s3://www.colinburns.com/food/ &> /tmp/awspush
-     if [ "$?" != "0" ]; then 
-        echo "Push problem with index.html"
-        exit 1
-     fi
-     echo "Pushed index.html to aws"
      echo "Pushing recipes to aws"
      s3cmd -c ~/.aws/.s3cfg -q --progress -P put --recursive tmp/pdf/* s3://www.colinburns.com/food/pdf-recipes/ &> /tmp/awspush
      if [ "$?" != "0" ]; then 
@@ -15,8 +8,16 @@ aws)
      fi
      rm -f /tmp/awspush
      echo "Pushed file to aws"
-     exit 0
-     ;;
+
+    echo "Pushing index.html to aws"
+    s3cmd -c ~/.aws/.s3cfg -q --progress -P put index.html s3://www.colinburns.com/food/ &> /tmp/awspush
+    if [ "$?" != "0" ]; then 
+       echo "Push problem with index.html"
+       exit 1
+    fi
+    echo "Pushed index.html to aws"
+    exit 0
+    ;;
 esac
 
 case $(uname -s) in
