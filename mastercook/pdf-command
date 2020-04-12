@@ -24,6 +24,7 @@ case $(uname -s) in
             tr=gtr ;;
     *) sed=sed
        tr=tr 
+       uselargefont=true
     ;;
 esac
 
@@ -99,8 +100,14 @@ do
 
         iconv -f utf-8 -t utf-8 -c "${rawfile}" | tr -d '\r' > ../tmp/recipes/${nospacefile}
 
-        printf '%s\n' 'g/^\* Exported from MasterCook \*$/+2s/^/\\begin{center}\\Huge /' w | ed -s ../tmp/recipes/${nospacefile}
-        $sed -i -e '/\\begin{center}\\Huge/s/$/\\end{center}\\normalsize\\vskip 0.2cm/' ../tmp/recipes/${nospacefile}
+	if [ "${uselargefont}" = "true" ]; then
+	           printf '%s\n' 'g/^\* Exported from MasterCook \*$/+2s/^/\\begin{center}{\\fontsize{30}{40}\\selectfont /' w | ed -s ../tmp/recipes/${nospacefile}
+        	$sed -i -e '/\\begin{center}{\\fontsize/s/$/}\\end{center}\\normalsize\\vskip 0.2cm/' ../tmp/recipes/${nospacefile}
+	else	  
+	        printf '%s\n' 'g/^\* Exported from MasterCook \*$/+2s/^/\\begin{center}\\Huge /' w | ed -s ../tmp/recipes/${nospacefile}
+        	$sed -i -e '/\\begin{center}\\Huge/s/$/\\end{center}\\normalsize\\vskip 0.2cm/' ../tmp/recipes/${nospacefile}
+	fi
+
         $sed -i -e '0,/Exported from MasterCook.*/{/Exported from MasterCook.*/d;}' ../tmp/recipes/$nospacefile
         $sed -i -e 's/Exported from MasterCook.*/\\newpage'/g ../tmp/recipes/$nospacefile
         $sed -i -e '/Recipe By.*\:.*/d' ../tmp/recipes/$nospacefile
@@ -112,6 +119,9 @@ do
         $sed -i -e 's/\&/\\\&/g' ../tmp/recipes/$nospacefile
         $sed -i -e '/Serving Size  \: 0/d' ../tmp/recipes/$nospacefile
         $sed -i -e 's/Serving Size  \:/Servings \:/g' ../tmp/recipes/$nospacefile
+	if [ "${uselargefont}" = "true" ]; then
+	   $sed -i -e 's/normalsize/large/g' ../tmp/recipes/$nospacefile
+	fi
     fi 
 
     if [ ! -e ../tmp/pdf/${pdffile} ]; then
